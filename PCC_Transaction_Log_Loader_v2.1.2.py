@@ -12,7 +12,7 @@ loaded_dir = r'C:\SQLBackupProduction\Loaded'
 smtp_server = 'smtp.thmahc.com'  # Replace with your SMTP server
 smtp_port = 25  # Replace with the SMTP port
 sender_email = 'PCC_Tasks@thmahc.com'
-receiver_email = 'ETL_Alerts@amhealthpartners.com'
+receiver_email = 'WMangum@amhealthpartners.com'
 subject = 'SQL Backup Restoration Failed'
 body = 'The SQL Backup restoration process failed. Please check the system for more details.'
 
