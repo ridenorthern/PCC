@@ -30,13 +30,15 @@ try:
     # CMD command to run SQL Backup with 'sa' credentials
     cmd = (
         f'"C:\\Program Files (x86)\\Red Gate\\SQL Backup 10\\(LOCAL)\\SQLBackupC.exe" '
+        f'-U sa -P Tnhe@lth '
         f'-SQL "RESTORE LOG [PCC] FROM DISK = \'{source_file}\' '
         f'WITH PASSWORD = \'0exLRKGsqg)6DaXJudScJpM3fSj44L3P\', '
         f'STANDBY = \'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.MSSQLSERVER\\MSSQL\\Backup\\Undo_PCC.dat\', '
-        f'ORPHAN_CHECK" -U sa -P Tnhe@lth'
+        f'ORPHAN_CHECK"'
     )
 
     # Execute the CMD command
+    print(f"Executing: {cmd}")
     result = subprocess.run(cmd, shell=True)
 
     # Check if the command was successful
@@ -44,14 +46,9 @@ try:
         print(f"SQL Backup command failed with exit code: {result.returncode}")
         exit(result.returncode)
 
-    # Check if the file was moved to the Loaded directory
-    if os.path.exists(loaded_file):
-        # If the file exists in the Loaded directory, delete the source file
-        if os.path.exists(source_file):
-            os.remove(source_file)
-        print(f"File {file_name} moved and source deleted.")
-    else:
-        print(f"File move failed or file not found in {loaded_dir}.")
+    # Move the file to the Loaded directory
+    shutil.move(source_file, loaded_file)
+    print(f"File {file_name} moved to {loaded_file} and source deleted.")
 
 except FileNotFoundError as e:
     print(f"Error: {e}")
