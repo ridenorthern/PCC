@@ -27,10 +27,10 @@ try:
     source_file = os.path.join(source_dir, file_name)
     loaded_file = os.path.join(loaded_dir, file_name)
 
-    # CMD command to run SQL Backup with 'sa' credentials
+    # CMD command to run SQL Backup with 'TNFRSVvXSQLPCC_SVC' credentials
     cmd = (
         f'"C:\\Program Files (x86)\\Red Gate\\SQL Backup 10\\(LOCAL)\\SQLBackupC.exe" '
-        f'-E '
+        f'-U sa -P Tnhe@lth '
         f'-SQL "RESTORE LOG [PCC] FROM DISK = \'{source_file}\' '
         f'WITH PASSWORD = \'0exLRKGsqg)6DaXJudScJpM3fSj44L3P\', '
         f'STANDBY = \'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.MSSQLSERVER\\MSSQL\\Backup\\Undo_PCC.dat\', '
