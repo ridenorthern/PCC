@@ -51,7 +51,7 @@ try:
     source_file = os.path.join(source_dir, file_name)
     loaded_file = os.path.join(loaded_dir, file_name)
 
-    # CMD command to run SQL Backup with 'sa' credentials
+    # CMD command to run SQL Backup with 'TNFRSVvXSQLPCC_SVC' credentials
     cmd = (
         f'"C:\\Program Files (x86)\\Red Gate\\SQL Backup 10\\(LOCAL)\\SQLBackupC.exe" '
         f'-U sa -P Tnhe@lth '
@@ -65,21 +65,21 @@ try:
     print(f"Executing: {cmd}")
     result = subprocess.run(cmd, shell=True)
 
-    # Check if the command was successful
-    if result.returncode != 0:
+    # Check if the command was successful or returned the warning code 472 (orphaned users)
+    if result.returncode == 0 or result.returncode == 472:
+        # Move the file to the Loaded directory
+        shutil.move(source_file, loaded_file)
+        print(f"File {file_name} moved to {loaded_file} and source deleted.")
+    else:
         print(f"SQL Backup command failed with exit code: {result.returncode}")
         send_email_alert(subject, body)
         exit(result.returncode)
 
-    # Move the file to the Loaded directory on success
-    shutil.move(source_file, loaded_file)
-    print(f"File {file_name} moved to {loaded_file} and source deleted.")
-
 except FileNotFoundError as e:
     print(f"Error: {e}")
-    send_email_alert(subject, f"File not found error: {e}")
+    send_email_alert(subject, f"FileNotFoundError: {e}")
     exit(1)
 except Exception as e:
     print(f"An unexpected error occurred: {e}")
-    send_email_alert(subject, f"An unexpected error occurred: {e}")
+    send_email_alert(subject, f"Unexpected error: {e}")
     exit(1)
