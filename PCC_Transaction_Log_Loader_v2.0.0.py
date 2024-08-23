@@ -3,7 +3,7 @@ import subprocess
 import shutil
 
 # Define directories with correct escape sequences
-source_dir = r'C:\PCC Backups_Temp'
+source_dir = r'C:\PCC_Backups_Temp'
 loaded_dir = r'C:\SQLBackupProduction\Loaded'
 
 try:
