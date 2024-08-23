@@ -1,0 +1,48 @@
+import os
+import subprocess
+import shutil
+
+# Define directories
+source_dir = r'C:\SQLBackupProduction'
+loaded_dir = r'C:\SQLBackupProduction\Loaded'
+
+# Find the .SQB file in the source directory
+file_name = None
+for file in os.listdir(source_dir):
+    if file.endswith('.SQB'):
+        file_name = file
+        break
+
+if file_name is None:
+    print(f"No SQB files found in {source_dir}.")
+    exit(1)
+
+# Full paths
+source_file = os.path.join(source_dir, file_name)
+loaded_file = os.path.join(loaded_dir, file_name)
+
+# CMD command to run SQL Backup with 'sa' credentials
+cmd = (
+    f'"C:\\Program Files (x86)\\Red Gate\\SQL Backup 10\\(LOCAL)\\SQLBackupC.exe" '
+    f'-SQL "RESTORE LOG [PCC] FROM DISK = \'{source_file}\' '
+    f'WITH PASSWORD = \'0exLRKGsqg)6DaXJudScJpM3fSj44L3P\', '
+    f'STANDBY = \'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.MSSQLSERVER\\MSSQL\\Backup\\Undo_PCC.dat\', '
+    f'ORPHAN_CHECK" -U sa -P Tnhe@lth'
+)
+
+# Execute the CMD command
+result = subprocess.run(cmd, shell=True)
+
+# Check if the command was successful
+if result.returncode != 0:
+    print(f"SQL Backup command failed with exit code: {result.returncode}")
+    exit(result.returncode)
+
+# Check if the file was moved to the Loaded directory
+if os.path.exists(loaded_file):
+    # If the file exists in the Loaded directory, delete the source file
+    if os.path.exists(source_file):
+        os.remove(source_file)
+    print(f"File {file_name} moved and source deleted.")
+else:
+    print(f"File move failed or file not found in {loaded_dir}.")
