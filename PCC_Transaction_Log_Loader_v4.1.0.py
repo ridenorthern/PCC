@@ -32,7 +32,7 @@ receiver_email = CONFIG['receiver_email']
 subject = 'PCC SQL Backup Restoration Failed - Step 1 - Get Latest File'
 body = f'The PCC SQL Backup SFTP Retrieve Latest File process failed @ {production_scripts}. Please check the system log file for more details.'
 
-# Function to send an email alert
+# Function to send an email aler
 def send_email_alert(subject, body):
     msg = MIMEText(body)
     msg['Subject'] = subject
