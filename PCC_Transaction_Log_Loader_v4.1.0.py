@@ -18,7 +18,7 @@ sftp_directory = CONFIG['sftp_directory']
 backup_directory = CONFIG['backup_directory']
 production_scripts = CONFIG['production_scripts']
 
-# SQL Server and Database configuration
+# SQL Server and Database configuratio
 sql_server = CONFIG['sql_server']
 sql_user = CONFIG['sql_user']
 sql_password = CONFIG['sql_password']
